@@ -1,7 +1,7 @@
-## Orientações para execução do projeto
+# Orientações para execução do projeto
 
 
-# Frontend
+## Frontend
 >Para criação do projeto React foi utilizado o Vite
 
 1) Pré-requisitos:
@@ -17,7 +17,7 @@ No terminal, executar o comando: npm run dev
 Verificar qual a instância, provavelmente http://localhost:5173/
 
 
-# Backend
+## Backend
 Passo a passo para rodar e testar o projeto FastAPI
 1️⃣ Abrir o terminal e ativar o projeto
 No seu PC:
