@@ -1,8 +1,8 @@
-# Orientações para execução do projeto
+## Orientações para execução do projeto
 
 
 # Frontend
->>Para criação do projeto React foi utilizado o Vite
+>Para criação do projeto React foi utilizado o Vite
 
 1) Pré-requisitos:
 Ter o node.js instalado (para verificar, rodar o comando node -v e npm -v no terminal)
