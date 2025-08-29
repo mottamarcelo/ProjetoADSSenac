@@ -1,0 +1,161 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #F4F3F3;
+  margin: 0;
+  padding: 0;
+}
+
+.app-container {
+  max-width: 400px;
+  margin: auto;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.profile-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 15px;
+}
+
+.profile-section {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+}
+
+.profile-info {
+  flex: 1;
+  padding-left: 10px;
+}
+
+.profile-pic {
+  width: 800px;
+  height: 800px;
+  background: gray;
+  border-radius: 50%;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+.buttons button {
+  background: #f1f1f1;
+  border: none;
+  padding: 8px;
+  border-radius: 8px;
+  flex: 1;
+  margin: 0 5px;
+}
+
+.promo {
+  background: #f9f9f9;
+  padding: 10px;
+}
+
+.security-check {
+  padding: 10px;
+}
+
+.progress-bar {
+  height: 6px;
+  background: #ddd;
+  border-radius: 3px;
+  margin: 5px 0;
+}
+
+.progress {
+  height: 100%;
+  background: blue;
+  border-radius: 3px;
+}
+
+.menu {
+  list-style: none;
+  padding: 0;
+}
+
+.menu li {
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.viagens-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.viagem-item {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  background-color: #f9f9f9;
+  margin-bottom: 6px;
+  border-radius: 6px;
+  transition: 0.2s;
+  line-height: 2;
+}
+
+.viagem-item:hover {
+  background-color: #e0f2f1;
+  cursor: pointer;
+}
+
+.status-viagem {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+}
+
+.caixa-selecao {
+  max-width: 130px;
+  font-size: 12px;
+  height: 37px;
+}
+
+.summary-trips {
+  background-color: #f9f9f9;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  padding: 12px;
+  margin-bottom: 20px;
+}
+
+.summary h4 {
+  margin-bottom: 8px;
+}
+
+.input-text {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-bottom: 12px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.input-textarea {
+  width: 100%;
+  padding: 10px;         
+  border-radius: 6px;    
+  border: 1px solid #ccc; 
+  margin-bottom: 12px; 
+  font-size: 14px;       
+  box-sizing: border-box;
+  height: 40px;           
+  resize: none;           
+}

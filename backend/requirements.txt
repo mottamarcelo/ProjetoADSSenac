@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+sqlalchemy
+alembic
+python-decouple
+bcrypt
+python-jose[cryptography]
+passlib[bcrypt]
+pydantic
+pydantic[email]

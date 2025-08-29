@@ -1,0 +1,61 @@
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import './index.css';
+import Login from "./Login";
+import Cadastro from "./Cadastro";
+import Perfil from './Perfil'
+import Agendamento from './Agendamento';
+import CalendarioMotorista from './CalendarioMotorista';
+import CalendarioPassageiro from './CalendarioPassageiro';
+import Suporte from './Suporte';
+import { parseJwt } from "./Login";
+
+function App() {
+
+  const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("token"));
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setLoggedIn(false);
+  };
+
+  const [tipo, setTipo] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const payload = parseJwt(token);
+      setTipo(payload.tipo);
+    }
+  }, []);
+
+  return (
+    <Router>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            loggedIn ? (
+              tipo === "motorista" ? (
+                <CalendarioMotorista onLogout={handleLogout} />
+              ) : (
+                <CalendarioPassageiro onLogout={handleLogout} />
+              )
+            ) : (
+              <Login onLoginSuccess={() => setLoggedIn(true)} />
+            )
+          }
+        />
+        <Route path="/login" element={<Login />} />
+        <Route path="/cadastro" element={<Cadastro />} />
+        <Route path="/perfil" element={<Perfil onLogout={handleLogout} />} />
+        <Route path="/agendamento" element={<Agendamento />} />
+        <Route path="/calendario_motorista" element={<CalendarioMotorista onLogout={handleLogout} />} />
+        <Route path="/calendario_passageiro" element={<CalendarioPassageiro onLogout={handleLogout} />} />
+        <Route path="/suporte" element={<Suporte />} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
