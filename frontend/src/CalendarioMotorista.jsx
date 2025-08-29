@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CalendarioMotorista.css";
 
-export default function CalendarioMotorista({ onLogout }) {
+export default function CalendarioMotorista({ setMostrarLista }) {
     const navigate = useNavigate();
     const hoje = new Date();
 
@@ -19,11 +19,8 @@ export default function CalendarioMotorista({ onLogout }) {
     const inicioSemana = primeiroDiaDoMes.getDay();
 
     const token = localStorage.getItem('token');
-    console.log(token);
-
     const payloadBase64 = token.split('.')[1];
     const payload = JSON.parse(atob(payloadBase64));
-    console.log(payload.id);
 
     const motoristaLogadoId = payload.id;
 
@@ -78,10 +75,12 @@ export default function CalendarioMotorista({ onLogout }) {
         switch (status) {
             case "agendada":
                 return "⏰";
+            case "confirmada":
+                return "✅";
+            case "concluída":
+                return "✅";
             case "cancelada":
                 return "🚫";
-            case "concluída":
-                return "❌";
             default:
                 return "❔";
         }
@@ -169,17 +168,22 @@ export default function CalendarioMotorista({ onLogout }) {
                             {viagensNaData.map((v) => {
                                 const isOwner = String(v.motorista.id) === String(motoristaLogadoId);
                                 return (
-                                    <li key={v.id} className={`trip-item ${isOwner ? "trip-owner" : ""}`}>
+                                    <li key={v.id} className={`trip ${isOwner ? "trip-owner" : ""}`}>
+                                        <p className="item"><strong>🪪 Motorista:</strong> {isOwner ? <strong>Você</strong> : v.motorista.nome}</p>
                                         <p className="item"><strong>🕒 Horário:</strong> {v.horario_partida.split(" - ")[1]}</p>
                                         <p className="item"><strong>🚗 Origem:</strong> {v.origem}</p>
                                         <p className="item"><strong>📍 Destino:</strong> {v.destino}</p>
-                                        <p className="item"><strong>🪪 Motorista:</strong> {v.motorista.nome}</p>
                                         <p className="item"><strong>💺 Vagas disponíveis:</strong> {v.vagas_disponiveis}</p>
                                         <p className="item"><strong>{emojiStatus(v.status)} Status:</strong> {v.status}</p>
                                         {isOwner && (
                                             <button
                                                 className="second-btn"
-                                                onClick={() => navigate("/perfil")}
+                                                onClick={
+                                                    () => {
+                                                        navigate("/perfil")
+                                                        setMostrarLista(true)
+                                                    }
+                                                }
                                             >
                                                 ✏️ Editar viagem
                                             </button>

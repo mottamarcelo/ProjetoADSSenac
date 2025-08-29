@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import './Perfil.css';
 import { parseJwt } from "./Login";
 
-function Perfil({ onLogout }) {
+function Perfil({ onLogout, mostrarLista, setMostrarLista }) {
   const navigate = useNavigate();
   const [email, setEmail] = useState(null);
   const [tipo, setTipo] = useState(null);
@@ -11,7 +11,7 @@ function Perfil({ onLogout }) {
   const [motoristaId, setMotoristaId] = useState(null);
   const [viagens, setViagens] = useState([]);
   const [reservas, setReservas] = useState([]);
-  const [mostrarLista, setMostrarLista] = useState(false);
+  const [rating, setRating] = useState(0);
 
   // Pega informações do usuário logado
   useEffect(() => {
@@ -198,10 +198,10 @@ function Perfil({ onLogout }) {
         return "⏰";
       case "confirmada":
         return "✅";
+      case "concluída":
+        return "✅";
       case "cancelada":
         return "🚫";
-      case "concluída":
-        return "❌";
       default:
         return "❔";
     }
@@ -255,7 +255,7 @@ function Perfil({ onLogout }) {
         {/* Motorista */}
         {mostrarLista && tipo === "motorista" && viagens.length > 0 && (
           <div className={`summary-trips slide-in-top ${mostrarLista ? 'list-visible' : 'list-hidden'}`}>
-            <h4>Suas viagens como motorista:</h4>
+            <h3>Suas viagens como motorista:</h3>
             <ul className="viagens-list">
               {sortViagens(viagens).map(v => (
                 <li key={v.id} className="viagem-item">
@@ -283,7 +283,7 @@ function Perfil({ onLogout }) {
         {/* Passageiro */}
         {mostrarLista && tipo === "passageiro" && reservasComMotorista.length > 0 && (
           <div className={`summary-trips slide-in-top ${mostrarLista ? 'list-visible' : 'list-hidden'}`}>
-            <h4>Reservas Ativas:</h4>
+            <h3>Reservas Ativas:</h3>
             <ul className="viagens-list">
               {sortReservas(reservasComMotorista)
                 .filter(r => r.status_reserva === "confirmada" && r.status_viagem === "agendada")
@@ -307,10 +307,10 @@ function Perfil({ onLogout }) {
                 ))}
             </ul>
 
-            <h4>Reservas Expiradas:</h4>
+            <h3>Viagens Concluídas:</h3>
             <ul className="viagens-list">
               {sortReservas(reservasComMotorista)
-                .filter(r => r.status_reserva !== "confirmada" || r.status_viagem !== "agendada")
+                .filter(r => r.status_reserva === "confirmada" && r.status_viagem === "concluída")
                 .map(r => (
                   <li key={r.reserva_id} className="viagem-item">
                     <strong>🕒 Data e Hora:</strong> {r.horario_partida} <br />
@@ -318,6 +318,23 @@ function Perfil({ onLogout }) {
                     <strong>🪪 Motorista:</strong> {r.motorista?.nome || "Indefinido"} <br />
                     <strong>{emojiStatus(r.status_viagem)} Status Viagem:</strong> {r.status_viagem} <br />
                     <strong>{emojiStatus(r.status_reserva)} Status Reserva:</strong> {r.status_reserva} <br />
+                    
+                  </li>
+                ))}
+            </ul>
+
+            <h3>Viagens Canceladas:</h3>
+            <ul className="viagens-list">
+              {sortReservas(reservasComMotorista)
+                .filter(r => r.status_reserva === "cancelada" || (r.status_reserva === "confirmada" && r.status_viagem === "cancelada"))
+                .map(r => (
+                  <li key={r.reserva_id} className="viagem-item">
+                    <strong>🕒 Data e Hora:</strong> {r.horario_partida} <br />
+                    <strong>🚗 Trajeto:</strong> {r.origem} → {r.destino} <br />
+                    <strong>🪪 Motorista:</strong> {r.motorista?.nome || "Indefinido"} <br />
+                    <strong>{emojiStatus(r.status_viagem)} Status Viagem:</strong> {r.status_viagem} <br />
+                    <strong>{emojiStatus(r.status_reserva)} Status Reserva:</strong> {r.status_reserva} <br />
+
                   </li>
                 ))}
             </ul>

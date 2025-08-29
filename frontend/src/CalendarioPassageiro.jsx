@@ -1,8 +1,8 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CalendarioPassageiro.css";
 
-export default function CalendarioPassageiro({ onLogout }) {
+export default function CalendarioPassageiro({ }) {
     const navigate = useNavigate();
     const hoje = new Date();
 
@@ -111,10 +111,12 @@ export default function CalendarioPassageiro({ onLogout }) {
         switch (status) {
             case "agendada":
                 return "⏰";
+            case "confirmada":
+                return "✅";
+            case "concluída":
+                return "✅";
             case "cancelada":
                 return "🚫";
-            case "concluída":
-                return "❌";
             default:
                 return "❔";
         }

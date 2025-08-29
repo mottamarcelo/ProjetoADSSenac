@@ -94,25 +94,21 @@
   margin-bottom: 8px;
 }
 
-.trip-item {
-  background-color: #f0f0f0;
+.trip {
+  background-color: #ffffff;
   padding: 10px;
   border-radius: 6px;
   margin-bottom: 10px;
   border: 1px solid #ddd;
+  opacity: 0.9;
 }
 
-.trip-item.trip-owner {
-  background-color: #fff;
-  border: 2px solid #ddd;
-}
-
-.trip-item.trip-owner:hover {
-  background-color: #f0f0f0;
+.trip.trip-owner {
+  opacity: 1;
 }
 
 .confirm-btn {
-  background-color: #2e7d32;
+  background-color: #f9f9f9;
   color: white;
   border: none;
   padding: 14px;

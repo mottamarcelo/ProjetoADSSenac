@@ -98,13 +98,13 @@ function Suporte({ onLogout }) {
       </div>
 
       <div className="form-group">
-        <label>Título:</label>
+        <label>Assunto:</label>
         <input
           type="text"
           value={assunto}
           onChange={(e) => setAssunto(e.target.value)}
           className="input-text"
-          placeholder="Digite o título do chamado"
+          placeholder="Digite o assunto do chamado"
         />
         <br />
         <label>Mensagem:</label>
@@ -113,7 +113,7 @@ function Suporte({ onLogout }) {
           value={mensagem}
           onChange={(e) => setMensagem(e.target.value)}
           className="input-textarea"
-          placeholder="Digite a mensagem do chamado"
+          placeholder="Digite o conteúdo do chamado"
           rows={1}
         ></textarea>
 

@@ -12,6 +12,7 @@ import { parseJwt } from "./Login";
 
 function App() {
 
+  const [mostrarLista, setMostrarLista] = useState(false);
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("token"));
 
   const handleLogout = () => {
@@ -48,9 +49,9 @@ function App() {
         />
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
-        <Route path="/perfil" element={<Perfil onLogout={handleLogout} />} />
+        <Route path="/perfil" element={<Perfil mostrarLista={mostrarLista} setMostrarLista={setMostrarLista} onLogout={handleLogout} />} />
         <Route path="/agendamento" element={<Agendamento />} />
-        <Route path="/calendario_motorista" element={<CalendarioMotorista />} />
+        <Route path="/calendario_motorista" element={<CalendarioMotorista setMostrarLista={setMostrarLista} />} />
         <Route path="/calendario_passageiro" element={<CalendarioPassageiro />} />
         <Route path="/suporte" element={<Suporte />} />
       </Routes>
