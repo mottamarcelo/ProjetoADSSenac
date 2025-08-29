@@ -37,9 +37,9 @@ function App() {
           element={
             loggedIn ? (
               tipo === "motorista" ? (
-                <CalendarioMotorista onLogout={handleLogout} />
+                <CalendarioMotorista />
               ) : (
-                <CalendarioPassageiro onLogout={handleLogout} />
+                <CalendarioPassageiro />
               )
             ) : (
               <Login onLoginSuccess={() => setLoggedIn(true)} />
@@ -50,8 +50,8 @@ function App() {
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/perfil" element={<Perfil onLogout={handleLogout} />} />
         <Route path="/agendamento" element={<Agendamento />} />
-        <Route path="/calendario_motorista" element={<CalendarioMotorista onLogout={handleLogout} />} />
-        <Route path="/calendario_passageiro" element={<CalendarioPassageiro onLogout={handleLogout} />} />
+        <Route path="/calendario_motorista" element={<CalendarioMotorista />} />
+        <Route path="/calendario_passageiro" element={<CalendarioPassageiro />} />
         <Route path="/suporte" element={<Suporte />} />
       </Routes>
     </Router>

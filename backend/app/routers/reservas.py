@@ -53,7 +53,8 @@ def criar_reserva(
     Permite que o **passageiro** cancele a própria reserva.  
 
     - O status da reserva muda para `cancelada`.  
-    - A viagem recupera a vaga liberada.  
+    - A viagem recupera a vaga liberada **apenas uma vez**.  
+    - Impede múltiplos cancelamentos da mesma reserva.  
     """
 )
 def cancelar_reserva(
@@ -68,8 +69,16 @@ def cancelar_reserva(
     if reserva.passageiro_id != usuario.id:
         raise HTTPException(status_code=403, detail="Você só pode cancelar suas próprias reservas")
 
+    # 🔹 impede cancelar duas vezes
+    if reserva.status == "cancelada":
+        raise HTTPException(status_code=400, detail="Essa reserva já foi cancelada")
+
+    # devolve vaga apenas 1 vez
+    viagem = reserva.viagem
+    viagem.vagas_disponiveis += 1
+
     reserva.status = "cancelada"
-    reserva.viagem.vagas_disponiveis += 1
+    reserva.horario_confirmacao = datetime.utcnow()  # registra quando foi cancelada
 
     db.commit()
     db.refresh(reserva)
@@ -176,37 +185,22 @@ def avaliar_passageiro(
 
     return {"mensagem": "Avaliação registrada com sucesso", "avaliacao": avaliacao}
 
+
 @router.get(
-    "/reservas/minhas",
+    "/minhas",
     summary="Listar minhas reservas (passageiro)",
     description="Permite que o passageiro logado veja todas as viagens que ele reservou.",
-    responses={
-        200: {
-            "description": "Lista de reservas do passageiro",
-            "content": {
-                "application/json": {
-                    "example": [
-                        {
-                            "reserva_id": 1,
-                            "viagem_id": 3,
-                            "origem": "Salvador",
-                            "destino": "Serrinha",
-                            "horario_partida": "18/08 - 20:30",
-                            "status_viagem": "agendada"
-                        }
-                    ]
-                }
-            },
-        },
-        401: {"description": "Token inválido ou não autorizado"},
-    }
 )
 def listar_minhas_reservas(
     db: Session = Depends(get_db),
     usuario = Depends(somente_passageiro)
 ):
     reservas = (
-    db.query(models.Reserva).join(models.Viagem, models.Reserva.viagem_id == models.Viagem.id).filter(models.Reserva.passageiro_id == usuario.id).all())
+        db.query(models.Reserva)
+        .join(models.Viagem, models.Reserva.viagem_id == models.Viagem.id)
+        .filter(models.Reserva.passageiro_id == usuario.id)
+        .all()
+    )
 
     return [
         {
@@ -215,7 +209,8 @@ def listar_minhas_reservas(
             "origem": r.viagem.origem,
             "destino": r.viagem.destino,
             "horario_partida": r.viagem.horario_partida.strftime("%d/%m - %H:%M"),
-            "status_viagem": r.viagem.status
+            "status_reserva": r.status,          # Status da reserva (confirmada, cancelada)
+            "status_viagem": r.viagem.status    # Status da viagem (agendada, cancelada, etc)
         }
         for r in reservas
-    ] 
+    ]

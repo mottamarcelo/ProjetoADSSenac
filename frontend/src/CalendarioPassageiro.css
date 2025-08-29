@@ -29,7 +29,7 @@
 .header-title {
   position: absolute;
   left: 50%;
-  transform: translateX(-50%); /* centraliza na metade */
+  transform: translateX(-50%);
   text-align: center;
 }
 
@@ -47,13 +47,13 @@
 .day-name {
   text-align: center;
   padding-bottom: 5px;
-  height: 60px;
+  height: 20px;
   box-sizing: border-box;
 }
 
 .day {
   width: 100%;
-  height: 60px;
+  height: 40px;
   border: 1px solid #ddd;
   border-radius: 6px;
   text-align: center;
@@ -67,18 +67,6 @@
 
 .day:hover {
   background-color: #f0f0f0;
-}
-
-.day.has-trip {
-  background-color: #ffeb3b;
-  border-radius: 50%;
-  font-weight: bold;
-  color: #000;
-  cursor: pointer;
-}
-
-.day.has-trip:hover {
-  background-color: #fdd835; /* amarelo mais forte no hover */
 }
 
 .day.selected {
@@ -115,7 +103,7 @@
 }´
 
 .trip-item:hover {
-  background-color: #e0f2f1;
+  background-color: #f0f0f0;
 }
 
 .confirm-btn {
@@ -134,13 +122,13 @@
 }
 
 .confirm-btn:disabled {
-  background-color: #ccc; /* cinza */
+  background-color: #ccc;
   color: #666;
   cursor: not-allowed;
 }
 
 .confirm-btn:disabled:hover {
-  background-color: #bbb; /* cinza mais claro no hover */
+  background-color: #bbb;
 }
 .aviso {
   text-align: center;
@@ -160,4 +148,8 @@
   width: 40px;
   height: 40px;
   border: 10px;
+}
+
+.item {
+  margin: 8px;
 }

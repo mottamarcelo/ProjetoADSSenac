@@ -47,7 +47,7 @@
 .day-name {
   text-align: center;
   padding-bottom: 5px;
-  height: 60px;
+  height: 20px;
   box-sizing: border-box;
 }
 
@@ -67,18 +67,6 @@
 
 .day:hover {
   background-color: #f0f0f0;
-}
-
-.day.has-trip {
-  background-color: #ffeb3b; /* amarelo destaque */
-  border-radius: 50%;
-  font-weight: bold;
-  color: #000;
-  cursor: pointer;
-}
-
-.day.has-trip:hover {
-  background-color: #fdd835; /* amarelo mais forte no hover */
 }
 
 .day.selected {
@@ -107,15 +95,20 @@
 }
 
 .trip-item {
-  background-color: #fff;
+  background-color: #f0f0f0;
   padding: 10px;
   border-radius: 6px;
   margin-bottom: 10px;
   border: 1px solid #ddd;
 }
 
-.trip-item:hover {
-  background-color: #e0f2f1;
+.trip-item.trip-owner {
+  background-color: #fff;
+  border: 2px solid #ddd;
+}
+
+.trip-item.trip-owner:hover {
+  background-color: #f0f0f0;
 }
 
 .confirm-btn {

@@ -109,8 +109,7 @@ body {
 }
 
 .viagem-item:hover {
-  background-color: #e0f2f1;
-  cursor: pointer;
+  background-color: #f0f0f0;
 }
 
 .status-viagem {
@@ -127,11 +126,54 @@ body {
 }
 
 .summary-trips {
-  background-color: #f9f9f9;
-  border-bottom-right-radius: 8px;
-  border-bottom-left-radius: 8px;
-  padding: 12px;
-  margin-bottom: 20px;
+  overflow: hidden;
+  margin-top: 10px;
+  transition: max-height 0.6s ease, opacity 0.6s ease;
+  max-height: 0;
+  opacity: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.summary-trips.list-visible {
+  max-height: 450px;
+  opacity: 1;
+}
+
+.summary-trips.list-hidden {
+  max-height: 0;
+  opacity: 0;
+}
+
+.slide-in-top {
+  animation: slide-in-top 1s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+  will-change: transform, opacity;
+}
+
+@keyframes slide-in-top {
+  0% {
+    transform: translateY(-24px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.slide-out-top {
+  animation: slide-out-top 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+}
+
+@keyframes slide-out-top {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-24px);
+    opacity: 0;
+  }
 }
 
 .summary h4 {

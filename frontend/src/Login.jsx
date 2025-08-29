@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './index.css';
 
-//função para recuperar os dados do usuário do token
   export const parseJwt = (token) => {
     try {
       const base64Payload = token.split(".")[1];
@@ -19,7 +18,7 @@ function Login() {
   const [password, setSenha] = useState("");
 
   const handleLogin = async (e) => {
-    e.preventDefault(); // evita reload da página
+    e.preventDefault();
     try {
       const data = new URLSearchParams();
       data.append("username", username);
@@ -52,7 +51,7 @@ function Login() {
       <img src="./src/images/rotacerta.png" style={styles.logo} alt="Logo" />
       <div style={styles.container}>
         <h2>Login</h2>
-        {/* Formulário */}
+
         <form onSubmit={handleLogin}>
           <div className="form-group">
             <input

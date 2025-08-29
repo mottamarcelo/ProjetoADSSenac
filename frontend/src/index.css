@@ -11,7 +11,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Agendamento.css */
 .container {
   max-width: 400px;
   margin: 0 auto;
@@ -99,6 +98,13 @@ body {
   transition: 0.2s;
 }
 
+.second-btn.active {
+  background-color: #575757;
+  color: white;
+  border-bottom-left-radius: 0%;
+  border-bottom-right-radius: 0%;
+}
+
 .second-btn:hover {
   background-color: #575757;
 }
@@ -133,22 +139,35 @@ body {
   color: #555;
 }
 
-.user-icon {
+.icon {
   cursor: pointer;
   width: 40px;
   height: 40px;
   font-size: 25px;
-  padding: 10px 8px 6px 9px;
+  padding: 10px 8px;
   border-radius: 8px;
   border: 0.1px solid #ddd;
-  margin-right: 12px;
   display: inline-block;
   text-align: center;
 }
 
-.user-icon:hover {
+.icon:hover {
   background: lightgrey;
   transform: scale(1.1);
+}
+
+.icon-selected {
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  font-size: 25px;
+  padding: 10px 8px;
+  border-radius: 8px;
+  border: 0.1px solid #ddd;
+  display: inline-block;
+  text-align: center;
+  background: lightgrey;
+  scale: 1.1;
 }
 
 .driver-icon {

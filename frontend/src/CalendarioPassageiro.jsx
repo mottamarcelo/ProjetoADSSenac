@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CalendarioPassageiro.css";
 
@@ -110,34 +110,33 @@ export default function CalendarioPassageiro({ onLogout }) {
     const emojiStatus = (status) => {
         switch (status) {
             case "agendada":
-                return "✅"; // OK
+                return "⏰";
             case "cancelada":
-                return "🚫"; // Block
+                return "🚫";
             case "concluída":
-                return "❌"; // X
+                return "❌";
             default:
-                return "❔"; // desconhecido
+                return "❔";
         }
-    };
-
-    const handleLogout = () => {
-        if (onLogout) onLogout();
-        navigate("/");
     };
 
     return (
         <div className="container">
             {/* Cabeçalho */}
             <div className="header">
-                <div className="user-icon header-right" onClick={() => navigate("/perfil")} title="Gerenciamento">
-                    👤
-                </div>
+                <div
+                    className="icon-selected"
+                    onClick={() => navigate(tipo === "motorista" ? "/calendario_motorista" : "/calendario_passageiro")}
+                    title="Calendário"
+                >
+                    📆
+                </div >
                 <div className="header-title">
                     <h2>Calendário</h2>
                     <h5>Espaço do Passageiro</h5>
                 </div>
-                <div onClick={handleLogout} title="Sair">
-                    <img src="./src/images/rotacerta_white.png" style={{ maxWidth: "70px" }} />
+                <div className="icon" onClick={() => navigate("/perfil")} title="Gerenciamento">
+                    👤
                 </div>
             </div>
 
@@ -190,18 +189,18 @@ export default function CalendarioPassageiro({ onLogout }) {
                         <ul className="viagens-list">
                             {viagensNaData.map((v) => (
                                 <li key={v.id} className="trip-item">
-                                    <p><strong>🕒 Horário:</strong> {v.horario_partida.split(" - ")[1]}</p>
-                                    <p><strong>🚗 Origem:</strong> {v.origem}</p>
-                                    <p><strong>📍 Destino:</strong> {v.destino}</p>
-                                    <p><strong>🪪 Motorista:</strong> {v.motorista?.nome}</p>
-                                    <p><strong>💺 Vagas disponíveis:</strong> {v.vagas_disponiveis}</p>
-                                    <p><strong>{emojiStatus(v.status)} Status:</strong> {v.status}</p>
+                                    <p className="item"><strong>🕒 Horário:</strong> {v.horario_partida.split(" - ")[1]}</p>
+                                    <p className="item"><strong>🚗 Origem:</strong> {v.origem}</p>
+                                    <p className="item"><strong>📍 Destino:</strong> {v.destino}</p>
+                                    <p className="item"><strong>🪪 Motorista:</strong> {v.motorista?.nome}</p>
+                                    <p className="item"><strong>💺 Vagas disponíveis:</strong> {v.vagas_disponiveis}</p>
+                                    <p className="item"><strong>{emojiStatus(v.status)} Status:</strong> {v.status}</p>
                                     <button
                                         className="confirm-btn"
                                         onClick={() => reservaViagem(v.id)}
                                         disabled={v.vagas_disponiveis === 0 || v.status !== "agendada"}
                                     >
-                                        Reservar Vaga
+                                        📝 Reservar Vaga
                                     </button>
                                 </li>
                             ))}

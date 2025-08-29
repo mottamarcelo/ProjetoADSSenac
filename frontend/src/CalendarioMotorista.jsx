@@ -17,7 +17,15 @@ export default function CalendarioMotorista({ onLogout }) {
     const ultimoDiaDoMes = new Date(ano, mes + 1, 0);
     const diasNoMes = ultimoDiaDoMes.getDate();
     const inicioSemana = primeiroDiaDoMes.getDay();
-    const motoristaLogadoId = localStorage.getItem("motorista_id");
+
+    const token = localStorage.getItem('token');
+    console.log(token);
+
+    const payloadBase64 = token.split('.')[1];
+    const payload = JSON.parse(atob(payloadBase64));
+    console.log(payload.id);
+
+    const motoristaLogadoId = payload.id;
 
     const calendarioRef = useRef();
 
@@ -66,24 +74,36 @@ export default function CalendarioMotorista({ onLogout }) {
         setDataSelecionada(null);
     };
 
-    const handleLogout = () => {
-        if (onLogout) onLogout();
-        navigate("/");
+    const emojiStatus = (status) => {
+        switch (status) {
+            case "agendada":
+                return "⏰";
+            case "cancelada":
+                return "🚫";
+            case "concluída":
+                return "❌";
+            default:
+                return "❔";
+        }
     };
 
     return (
         <div className="container">
             {/* Cabeçalho */}
             <div className="header">
-                <div className="driver-icon header-right" onClick={() => navigate("/perfil")} title="Gerenciamento">
-                    <img className="profile-pic" src='./src/images/volante.png' alt="" />
-                </div>
+                <div
+                    className="icon-selected"
+                    onClick={() => navigate(tipo === "motorista" ? "/calendario_motorista" : "/calendario_passageiro")}
+                    title="Calendário"
+                >
+                    📆
+                </div >
                 <div className="header-title">
                     <h2>Calendário</h2>
                     <h5>Espaço do Motorista</h5>
                 </div>
-                <div onClick={handleLogout} title="Sair">
-                    <img src="./src/images/rotacerta_white.png" style={{ maxWidth: "70px" }} />
+                <div className="icon" onClick={() => navigate("/perfil")} title="Gerenciamento">
+                    👤
                 </div>
             </div>
 
@@ -147,21 +167,21 @@ export default function CalendarioMotorista({ onLogout }) {
                     ) : viagensNaData.length > 0 ? (
                         <ul className="viagens-list">
                             {viagensNaData.map((v) => {
-                                const isOwner = String(v.motorista_id) === String(motoristaLogadoId);
+                                const isOwner = String(v.motorista.id) === String(motoristaLogadoId);
                                 return (
                                     <li key={v.id} className={`trip-item ${isOwner ? "trip-owner" : ""}`}>
-                                        <p><strong>🕒 Horário:</strong> {v.horario_partida.split(" - ")[1]}</p>
-                                        <p><strong>🚗 Origem:</strong> {v.origem}</p>
-                                        <p><strong>📍 Destino:</strong> {v.destino}</p>
-                                        <p><strong>🪪 Motorista:</strong> {v.motorista.nome}</p>
-                                        <p><strong>💺 Vagas disponíveis:</strong> {v.vagas_disponiveis}</p>
-                                        <p><strong>📋 Status:</strong> {v.status}</p>
+                                        <p className="item"><strong>🕒 Horário:</strong> {v.horario_partida.split(" - ")[1]}</p>
+                                        <p className="item"><strong>🚗 Origem:</strong> {v.origem}</p>
+                                        <p className="item"><strong>📍 Destino:</strong> {v.destino}</p>
+                                        <p className="item"><strong>🪪 Motorista:</strong> {v.motorista.nome}</p>
+                                        <p className="item"><strong>💺 Vagas disponíveis:</strong> {v.vagas_disponiveis}</p>
+                                        <p className="item"><strong>{emojiStatus(v.status)} Status:</strong> {v.status}</p>
                                         {isOwner && (
                                             <button
-                                                className="edit-btn"
-                                                onClick={() => navigate(`/editar-viagem/${v.id}`)}
+                                                className="second-btn"
+                                                onClick={() => navigate("/perfil")}
                                             >
-                                                ✏️ Editar minha viagem
+                                                ✏️ Editar viagem
                                             </button>
                                         )}
                                     </li>

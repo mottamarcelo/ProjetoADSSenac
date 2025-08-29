@@ -21,14 +21,13 @@ function Agendamento() {
   const [vagas_disponiveis, setVagas] = useState('');
   const selecionadaFromState = location.state?.dataSelecionada || "";
   const [data, setData] = useState(brToIso(selecionadaFromState));
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
       if (!token) return alert("Usuário não autenticado");
 
-      // Converte data e hora para objeto Date
       const [ano, mes, dia] = data.split("-").map(Number);
       const [hora, min] = horario_partida.split(":").map(Number);
 
@@ -39,10 +38,8 @@ function Agendamento() {
         return alert("Não é possível cadastrar uma viagem em data/hora passada.");
       }
 
-      // Formata data e hora para o backend (dd/mm - hh:mm)
       const horarioBackend = `${String(dia).padStart(2, "0")}/${String(mes).padStart(2, "0")} - ${horario_partida}`;
 
-      // Monta query params
       const query = new URLSearchParams({
         origem,
         destino,
@@ -77,14 +74,14 @@ function Agendamento() {
   return (
     <div className="container">
       <div className="header">
-        <div className="user-icon" onClick={() => navigate("/calendario_motorista")} title="Retornar para o Calendário">
+        <div className="icon" onClick={() => navigate("/calendario_motorista")} title="Voltar para o Calendário">
           🔙
         </div>
-        <div>
+        <div className="header-title">
           <h2>Agendar Viagem</h2>
         </div>
-        <div onClick={() => navigate("/calendario_motorista")} title="Logo">
-          <img src="./src/images/rotacerta_white.png" style={styles.img} alt="Logo" />
+        <div title="Logo">
+          <img src="./src/images/rotacerta_white.png" style={{ maxWidth: "58px" }} />
         </div>
       </div>
 
